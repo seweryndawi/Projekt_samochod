@@ -1,1 +1,1 @@
-cos
+Projekt akademicki dotyczący fal hamowania.
