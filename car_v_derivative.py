@@ -1,17 +1,20 @@
-import find_v0
-import change_of_speed
+from change_of_speed import vel_change
 
-def calculte_car_v_derivative(df, Id):
+def calculte_car_v_derivative(df, ID, frame0, rate_of_change):
     """
     Dla samochodu z wybranym numerem ID wylicza zmienność v' na całej odległości.
-    Funkcja używa innej funkcji, 'change_of_speed', do wyliczenia v'
-    poczynając od pierwszej klatki.
+    Funkcja używa innej funkcji, 'vel_change', do wyliczenia v'
+    poczynając od pierwszej klatki samochodu z zadanym ID.
+    Zmienna 'frame0' określa klatkę początkową.
+    Funkcja pobiera zmienną 'rate_of_change', aby ustalić krok.
     """
-    v0 = find_v0.find_v0(df, Id)
-    frameInterval_vDerivative = [] # Zawiera informacje o początku przedziału, końcu przedziału i v' na tym przedziale.
+    
+    vChangeList = [] # Zawiera informacje o początku przedziału, końcu przedziału i v' na tym przedziale.
+
     for iteration in range(0,100):
-        vDerivative = change_of_speed.change(df, Id, 128, iteration*10)
-        if vDerivative == "Measurement_out_of_bounds":
+        vChange = vel_change(df, ID, frame0 + iteration*rate_of_change, rate_of_change)
+        if vChange == "Frame 2 out of bounds":
             break
-        frameInterval_vDerivative.append((128+iteration*10, 128+10+iteration*10, vDerivative))
-    return frameInterval_vDerivative
+        vChangeList.append((frame0 + iteration*rate_of_change, frame0+rate_of_change + iteration*rate_of_change, vChange))
+
+    return vChangeList
