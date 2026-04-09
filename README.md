@@ -1,1 +1,1 @@
-Projekt akademicki dotyczący fal hamowania.
+Projekt akademicki dotyczący fal hamowania. Używa danych z NGSIM-US-101.
